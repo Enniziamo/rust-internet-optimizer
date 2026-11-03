@@ -1,0 +1,28 @@
+/target
+# Dependencies
+node_modules/
+
+# Environment variables (Gizli bilgiler)
+.env
+.env.*
+!.env.example
+
+# Build files
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+
+# IDE files
+.vscode/
+.idea/
+
+# Operating system
+.DS_Store
+Thumbs.db
+
+# Cache
+.cache/
+coverage/
