@@ -1,4 +1,4 @@
-Rust Internet Optimizer
+#Rust Internet Optimizer
 
 A lightweight network optimization and diagnostics toolkit written in Rust.
 
