@@ -1,0 +1,5 @@
+[proxy]
+enabled = false
+listen = "127.0.0.1:8080"
+allowed_connect_ports = [443]
+max_connections = 128
