@@ -1,17 +1,12 @@
 use anyhow::{bail, Context, Result};
 use tokio::{
-    io::{
-        copy_bidirectional, AsyncReadExt, AsyncWriteExt,
-    },
+    io::{copy_bidirectional, AsyncReadExt, AsyncWriteExt},
     net::TcpStream,
 };
 
 const MAX_HEADER_SIZE: usize = 8192;
 
-pub async fn handle(
-    mut client: TcpStream,
-    allowed_ports: Vec<u16>,
-) -> Result<()> {
+pub async fn handle(mut client: TcpStream, allowed_ports: Vec<u16>) -> Result<()> {
     let mut request = Vec::new();
 
     loop {
@@ -25,18 +20,14 @@ pub async fn handle(
 
         request.push(byte[0]);
 
-        anyhow::ensure!(
-            request.len() <= MAX_HEADER_SIZE,
-            "Request header too large"
-        );
+        anyhow::ensure!(request.len() <= MAX_HEADER_SIZE, "Request header too large");
 
         if request.ends_with(b"\r\n\r\n") {
             break;
         }
     }
 
-    let request_text = std::str::from_utf8(&request)
-        .context("Invalid HTTP request encoding")?;
+    let request_text = std::str::from_utf8(&request).context("Invalid HTTP request encoding")?;
 
     let request_line = request_text
         .lines()
@@ -91,9 +82,7 @@ pub async fn handle(
     };
 
     client
-        .write_all(
-            b"HTTP/1.1 200 Connection Established\r\n\r\n",
-        )
+        .write_all(b"HTTP/1.1 200 Connection Established\r\n\r\n")
         .await?;
 
     let (client_to_upstream, upstream_to_client) =
@@ -110,19 +99,13 @@ pub async fn handle(
 
 fn parse_authority(authority: &str) -> Result<(String, u16)> {
     let (host, port) = if let Some(rest) = authority.strip_prefix('[') {
-        let (host, suffix) = rest
-            .split_once(']')
-            .context("Invalid IPv6 authority")?;
+        let (host, suffix) = rest.split_once(']').context("Invalid IPv6 authority")?;
 
-        let port = suffix
-            .strip_prefix(':')
-            .context("Missing port")?;
+        let port = suffix.strip_prefix(':').context("Missing port")?;
 
         (host.to_string(), port)
     } else {
-        let (host, port) = authority
-            .rsplit_once(':')
-            .context("Missing target port")?;
+        let (host, port) = authority.rsplit_once(':').context("Missing target port")?;
 
         (host.to_string(), port)
     };

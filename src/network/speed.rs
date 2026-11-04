@@ -1,4 +1,3 @@
-
 use anyhow::{Context, Result};
 use futures_util::StreamExt;
 use std::time::Instant;
@@ -42,9 +41,7 @@ pub async fn test(url: &str) -> Result<()> {
         anyhow::bail!("Ölçüm süresi geçersiz.");
     }
 
-    let mbps = (total_bytes as f64 * 8.0)
-        / elapsed
-        / 1_000_000.0;
+    let mbps = (total_bytes as f64 * 8.0) / elapsed / 1_000_000.0;
 
     let mbytes = total_bytes as f64 / 1_000_000.0;
 

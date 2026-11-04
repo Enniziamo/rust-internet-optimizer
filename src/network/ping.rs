@@ -1,4 +1,3 @@
-
 use anyhow::Result;
 use std::time::Instant;
 use tokio::net::TcpStream;
@@ -10,19 +9,13 @@ pub async fn test(host: &str, port: u16) -> Result<()> {
     for attempt in 1..=5 {
         let start = Instant::now();
 
-        let result = timeout(
-            Duration::from_secs(5),
-            TcpStream::connect((host, port))
-        ).await;
+        let result = timeout(Duration::from_secs(5), TcpStream::connect((host, port))).await;
 
         match result {
             Ok(Ok(_stream)) => {
                 let elapsed = start.elapsed();
 
-                println!(
-                    "Deneme {attempt}: {:.2} ms",
-                    elapsed.as_secs_f64() * 1000.0
-                );
+                println!("Deneme {attempt}: {:.2} ms", elapsed.as_secs_f64() * 1000.0);
             }
 
             Ok(Err(error)) => {

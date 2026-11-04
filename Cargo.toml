@@ -1,8 +1,10 @@
-
 [package]
 name = "internet-optimizer"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
+description = "A modular network diagnostics and forward proxy toolkit"
+license = "MIT"
+repository = "https://github.com/Enniziamo/rust-internet-optimizer"
 
 [[bin]]
 name = "rio"
@@ -16,3 +18,10 @@ reqwest = { version = "0.12", default-features = false, features = ["rustls-tls"
 futures-util = "0.3"
 serde = { version = "1", features = ["derive"] }
 toml = "0.8"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true

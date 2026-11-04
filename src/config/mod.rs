@@ -38,11 +38,10 @@ impl Default for ProxyConfig {
 
 impl Config {
     pub fn load(path: impl AsRef<Path>) -> Result<Self> {
-        let content = fs::read_to_string(path.as_ref())
-            .context("Could not read configuration file")?;
+        let content =
+            fs::read_to_string(path.as_ref()).context("Could not read configuration file")?;
 
-        let config: Self =
-            toml::from_str(&content).context("Invalid TOML configuration")?;
+        let config: Self = toml::from_str(&content).context("Invalid TOML configuration")?;
 
         config.validate()?;
 

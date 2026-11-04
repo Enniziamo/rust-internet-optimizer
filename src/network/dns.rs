@@ -1,4 +1,3 @@
-
 use anyhow::{Context, Result};
 use std::time::Instant;
 use tokio::net::lookup_host;

@@ -1,4 +1,3 @@
-
 use anyhow::Result;
 
 pub async fn check(host: &str) -> Result<()> {
